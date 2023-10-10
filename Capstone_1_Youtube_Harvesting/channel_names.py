@@ -1,7 +1,7 @@
 import pymongo
 
 # Bridging a connection with MongoDB Atlas and Creating a new database(youtube_data)
-client = pymongo.MongoClient("localhost", 27017)
+client = pymongo.MongoClient("hostname", port_number)
 db = client.youtube_raw_data
 
 # FUNCTION TO GET CHANNEL NAMES FROM MONGODB
