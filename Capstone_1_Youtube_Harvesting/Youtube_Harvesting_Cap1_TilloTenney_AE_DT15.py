@@ -36,19 +36,19 @@ with st.sidebar:
                                    "nav-link-selected": {"background-color": "#273346"}})
 
 # Bridging a connection with MongoDB Atlas and Creating a new database(youtube_data)
-client = pymongo.MongoClient("localhost", 27017)
+client = pymongo.MongoClient("hostname", port_number)
 db = client.youtube_raw_data
 
 # CONNECTING WITH MYSQL DATABASE(youtube)
-mydb = sql.connect(host="localhost",
-                   user="root",
-                   password="root",
+mydb = sql.connect(host="hostname",
+                   user="username",
+                   password="password",
                    database="youtube"
                    )
 mycursor = mydb.cursor(buffered=True)
 
 # BUILDING CONNECTION WITH YOUTUBE API
-api_key = "AIzaSyCs0WxXm3TrDBlqdr_eX5ErQ-XJk6kyVwg"
+api_key = "api key"
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 # HOME PAGE
@@ -64,14 +64,14 @@ if selected == "Home":
 
 # EXTRACT AND TRANSFORM PAGE
 if selected == "Extract & Transform":
-    tab1, tab2 = st.tabs(["$\huge 📝 EXTRACT $", "$\huge🚀 TRANSFORM $"])
+    tab1, tab2 = st.tabs(["$\huge📊 EXTRACT $", "$\huge🏢 TRANSFORM $"])
 
     # EXTRACT TAB
     with tab1:
         st.markdown("#    ")
         st.write("### Enter YouTube Channel_ID below :")
         ch_id = st.text_input(
-            "Hint : Goto channel's home page > Right click > View page source > Find channel_id(To extract multiple channels kindly seperate channel id's with comma(,))").split(',')
+            "Hint : Goto channel's home page > Right click > View page source > Find channel_id (To extract multiple channels kindly seperate channel id's with comma(,))").split(',')
 
         if ch_id and st.button("Extract Data"):
             ch_details = get_channel_details(ch_id)
@@ -113,7 +113,7 @@ if selected == "Extract & Transform":
 
     with tab2:
         st.markdown("#   ")
-        st.markdown("### Select a channel to begin Transformation to SQL")
+        st.markdown("### Select a channel to begin Transformation to MySQL DB")
 
         ch_names = channel_names()
         user_inp = st.selectbox("Select channel", options=ch_names)
@@ -200,7 +200,7 @@ try:
                             c.channel_name = v.channel_name
                             GROUP BY Channel_Name
                             ORDER BY total_videos DESC
-                            LIMIT 1""")
+                            """)
         df = pd.DataFrame(mycursor.fetchall(), columns=mycursor.column_names)
         st.write(df)
         st.write("### :green[Number of videos in each channel :]")
@@ -321,20 +321,3 @@ try:
         st.plotly_chart(fig, use_container_width=True)
 except:
         st.write("### There's no MySQL DB exist to process result")
-
-
-
-#print(get_channel_details(["UCtY8p96hHhCsKqMMKGDMp7w","UCnV8DtCO0uFndc8DBodTCSA","UCk081mmVz4hzff-3YVBAxow","UCiJKrqlkEha2kj3D9vSUCIg","UCl3pOdJaSEz8fnDwKV8Nbvg","UC7Qjz-AT300K3KRKBb4uiaA"]))
-# print(len(get_channel_videos(["UC7Qjz-AT300K3KRKBb4uiaA","UCl3pOdJaSEz8fnDwKV8Nbvg"])))
-# print(get_comments_details(get_channel_videos(["UC7Qjz-AT300K3KRKBb4uiaA","UCl3pOdJaSEz8fnDwKV8Nbvg"])))
-#print(get_video_details(get_channel_videos(["UC7Qjz-AT300K3KRKBb4uiaA","UCl3pOdJaSEz8fnDwKV8Nbvg"])))
-#print(len(get_video_details(get_channel_videos(["UC7Qjz-AT300K3KRKBb4uiaA","UCl3pOdJaSEz8fnDwKV8Nbvg"]))))
-#print(get_channel_videos(["UC7Qjz-AT300K3KRKBb4uiaA","UCl3pOdJaSEz8fnDwKV8Nbvg"]))
-#out = get_playlist_name(["UC7Qjz-AT300K3KRKBb4uiaA","UCl3pOdJaSEz8fnDwKV8Nbvg"])
-#print(out)
-#print(len(out))
-
-# print(get_comments_details(get_channel_videos("UCvyZS6W6zMJCZBVzF-Ei6sw")))
-
-#UCtY8p96hHhCsKqMMKGDMp7w,UCnV8DtCO0uFndc8DBodTCSA,UCk081mmVz4hzff-3YVBAxow,UCiJKrqlkEha2kj3D9vSUCIg,UCl3pOdJaSEz8fnDwKV8Nbvg,UC7Qjz-AT300K3KRKBb4uiaA
-#UC8LFnF_C2w__jFAx_KdI35A,UCagSy965iDCzdAnZXPgNCJg
