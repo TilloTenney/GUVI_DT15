@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 
 # BUILDING CONNECTION WITH YOUTUBE API
-api_key = "AIzaSyCs0WxXm3TrDBlqdr_eX5ErQ-XJk6kyVwg"
+api_key = "Api_Key"
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 # FUNCTION TO GET VIDEO IDS
